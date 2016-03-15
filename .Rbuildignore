@@ -1,0 +1,6 @@
+^.*\.Rproj$
+^\.Rproj\.user$
+.gitignore
+images
+README.md
+.DS_Store
