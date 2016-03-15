@@ -8,5 +8,5 @@ http://zeligproject.org
 
 <br>
 
-![Example Page](images/ei1.pdf)
+![Example Page](images/ei1.png)
 
