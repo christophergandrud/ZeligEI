@@ -13,7 +13,8 @@ Imports:
     jsonlite,
     dplyr,
     eiPack,
-    ei
+    ei,
+    MCMCpack
 Suggests:
     testthat,
     knitr
@@ -21,4 +22,6 @@ Collate:
     'model-ei.R'
     'model-ei-rxc.R'
     'model-ei-ml.R'
+    'model-ei-dynamic.R'
+    'model-ei-hier.R'
     'create-json.R'

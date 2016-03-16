@@ -1,4 +1,4 @@
-import(methods, Zelig, jsonlite, dplyr, eiPack, ei)
+import(methods, Zelig, jsonlite, dplyr, eiPack, ei, MCMCpack)
 
 importFrom("MASS", "mvrnorm")
 
@@ -9,5 +9,7 @@ exportPattern("^[[:alpha:]]+")
 exportClasses(
      "Zelig-ei",
      "Zelig-eirxc",
-     "Zelig-eiml"
+     "Zelig-eiml",
+     "Zelig-eidynamic",
+     "Zelig-eihier"
 )
