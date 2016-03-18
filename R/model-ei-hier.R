@@ -27,6 +27,10 @@ zeihier$methods(
     if(!identical(bootstrap,FALSE)){
       stop("Error: The bootstrap is not available for Markov chain Monte Carlo (MCMC) models.")
     }
+    if(!is.null(weights)){
+      stop("Error: Weights are not implemented for the Wakefield Hierarchical EI model.  Try the eiml model if weights are required.")
+    }
+
     cnvt <- convertEIformula(formula=formula, N=N, data=data)
 
     .self$zelig.call <- match.call(expand.dots = TRUE)
@@ -39,6 +43,7 @@ zeihier$methods(
 
     .self$model.call$N <- NULL
     .self$model.call$formula <- NULL
+    .self$model.call$data <- NULL
 
     callSuper(formula = formula, data = data, ..., weights = NULL, by = by, bootstrap = FALSE)
   }

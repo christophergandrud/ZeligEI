@@ -27,7 +27,7 @@ zeidynamic$methods(
     if(!identical(bootstrap,FALSE)){
       stop("Error: The bootstrap is not available for Markov chain Monte Carlo (MCMC) models.")
     }
-    if(!identical(weights,FALSE)){
+    if(!is.null(weights)){
       stop("Error: This model is dynamic over time and currently Zelig does not have a weighting approach to work in this model.
         Check if you intended to use the W argument to adjust the temporal dependence among elements in the Quinn model.")
     }
@@ -41,8 +41,9 @@ zeidynamic$methods(
     .self$model.call$c0 <- cnvt$c0
     .self$model.call$c1 <- cnvt$c1
 
-    .self$model.call$N <- NULL
+    .self$model.call$N <- NULL       
     .self$model.call$formula <- NULL
+    .self$model.call$data <- NULL
 
     callSuper(formula = formula, data = data, ..., weights = NULL, by = by, bootstrap = FALSE)
   }
