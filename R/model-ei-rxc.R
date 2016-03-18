@@ -1,4 +1,4 @@
-#' Ecological Inference Model for Something Spectacular
+#' Multinomial Dirichlet model for Ecological Inference in RxC tables
 #'
 #' Vignette: \url{http://docs.zeligproject.org/en/latest/zeligei-eirxc.html}
 #' @import methods
@@ -14,19 +14,31 @@ zeirxc$methods(
   initialize = function() {
     callSuper()
     .self$name <- "eirxc"
-    .self$description <- "Ecological Inference Model for Something Spectacular"
-    .self$fn <- quote(ei::ei)
-    .self$packageauthors <- "Someone"
+    .self$description <- "Multinomial Dirichlet model for Ecological Inference in RxC tables"
+    .self$fn <- quote(eiPack::ei.MD.bayes)
+    .self$packageauthors <- "Michael Kellerman, Olivia Lau"
     .self$wrapper <- "eirxc"
     .self$vignette.url <- "http://docs.zeligproject.org/en/latest/zeligei-eirxc.html"
   }
 )
 
 zeirxc$methods(
-  zelig = function(formula, data, N=NULL, ..., weights = NULL, by = NULL, bootstrap = FALSE) {
+  zelig = function(formula, data, N = NULL, ..., weights = NULL, by = NULL, bootstrap = FALSE) {
+    if(is.null(N)){
+        stop("The argument N needs to be set to the name of the variable giving the total for each unit, or a vector of counts.")
+        
+        # Put in automated fix if data is integer.
+    }
+    
     .self$zelig.call <- match.call(expand.dots = TRUE)
+    
     .self$model.call <- match.call(expand.dots = TRUE)
-    callSuper(formula = formula, data = data, ..., weights = weights, by = by, bootstrap = bootstrap)
+    .self$model.call$N <- NULL
+    if(is.numeric(N)){
+        .self$model.call$total <- "ZeligN"
+    }else{
+        .self$model.call$total <- N
+    }
+    callSuper(formula = formula, data = data, N=NULL, ..., weights = weights, by = by, bootstrap = bootstrap)
   }
 )
-
