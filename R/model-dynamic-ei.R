@@ -21,14 +21,15 @@ zeidynamic$methods(
     .self$wrapper <- "eidynamic"
     .self$vignette.url <- "http://docs.zeligproject.org/en/latest/zeligei-eidynamic.html"
     ref1<-bibentry(
-            bibtype="Book",
+            bibtype="InCollection",
             title = "Ecological Inference in the Presence of Temporal Dependence.",
             booktitle = "Ecological Inference: New Methodological Strategies",
             author = person("Kevin", "Quinn"),
+            year = 2004,
             publisher = "Cambridge University Press",
             organization = "Cambridge University Press",
             address = "New York",
-            editor = list(person("Gary", "King"), person("Ori", "Rosen"), person("Martin", "Tanner")) 
+            editor = c(person("Gary", "King"), person("Ori", "Rosen"), person("Martin", "Tanner")) 
             )
     .self$refs<-c(.self$refs,ref1)
   }
