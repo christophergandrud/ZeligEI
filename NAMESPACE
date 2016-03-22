@@ -2,7 +2,7 @@ import(methods, Zelig, jsonlite, dplyr, eiPack, ei, MCMCpack)
 
 importFrom("MASS", "mvrnorm")
 
-importFrom("stats", "runif")
+importFrom("stats", "runif", "as.formula")
 
 exportPattern("^[[:alpha:]]+")
 
