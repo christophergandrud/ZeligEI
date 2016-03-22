@@ -1,0 +1,56 @@
+{
+  "zelig5eimodels": {
+    "eirxc": {
+      "name": ["eirxc"],
+      "description": ["Multinomial Dirichlet model for Ecological Inference in RxC tables"],
+      "outcome": {
+        "modelingType": [""]
+      },
+      "explanatory": {
+        "modelingType": ["continuous", "discrete", "nominal", "ordinal", "binary"]
+      },
+      "vignette.url": ["http://docs.zeligproject.org/en/latest/zeligei-eirxc.html"],
+      "wrapper": ["eirxc"],
+      "tree": ["Zelig-eirxc", "Zelig-ei"]
+    },
+    "eidynamic": {
+      "name": ["eidynamic"],
+      "description": ["Quinn's Dynamic Ecological Inference Model"],
+      "outcome": {
+        "modelingType": [""]
+      },
+      "explanatory": {
+        "modelingType": ["continuous", "discrete", "nominal", "ordinal", "binary"]
+      },
+      "vignette.url": ["http://docs.zeligproject.org/en/latest/zeligei-eidynamic.html"],
+      "wrapper": ["eidynamic"],
+      "tree": ["Zelig-eidynamic", "Zelig-ei"]
+    },
+    "eihier": {
+      "name": ["eihier"],
+      "description": ["Wakefield's Hierarchical Ecological Inference Model"],
+      "outcome": {
+        "modelingType": [""]
+      },
+      "explanatory": {
+        "modelingType": ["continuous", "discrete", "nominal", "ordinal", "binary"]
+      },
+      "vignette.url": ["http://docs.zeligproject.org/en/latest/zeligei-eihier.html"],
+      "wrapper": ["eihier"],
+      "tree": ["Zelig-eihier", "Zelig-ei"]
+    },
+    "eiml": {
+      "name": ["eiml"],
+      "description": ["Ecological Inference Model by Maximum Likelihood"],
+      "outcome": {
+        "modelingType": [""]
+      },
+      "explanatory": {
+        "modelingType": ["continuous", "discrete", "nominal", "ordinal", "binary"]
+      },
+      "vignette.url": ["http://docs.zeligproject.org/en/latest/zeligei-eiml.html"],
+      "wrapper": ["eiml"],
+      "tree": ["Zelig-eiml", "Zelig-ei"]
+    }
+  }
+}
