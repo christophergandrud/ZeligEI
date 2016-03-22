@@ -1,4 +1,8 @@
-#' @include model-eirxc.R
+#' @include model-ei.R
+#' @include model-hier-ei.R
+#' @include model-ml-ei.R
+#' @include model-dynamic-ei.R
+#' @include model-rxc-ei.R
 
 #library(jsonlite)
 
