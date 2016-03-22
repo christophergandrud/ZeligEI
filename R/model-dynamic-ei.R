@@ -10,6 +10,7 @@
 zeidynamic <- setRefClass("Zelig-eidynamic",
                           contains = "Zelig-ei")
 
+
 zeidynamic$methods(
   initialize = function() {
     callSuper()
@@ -19,6 +20,17 @@ zeidynamic$methods(
     .self$packageauthors <- "Andrew D. Martin, Kevin M. Quinn, Jong Hee Park"
     .self$wrapper <- "eidynamic"
     .self$vignette.url <- "http://docs.zeligproject.org/en/latest/zeligei-eidynamic.html"
+    ref1<-bibentry(
+            bibtype="Book",
+            title = "Ecological Inference in the Presence of Temporal Dependence.",
+            booktitle = "Ecological Inference: New Methodological Strategies",
+            author = person("Kevin", "Quinn"),
+            publisher = "Cambridge University Press",
+            organization = "Cambridge University Press",
+            address = "New York",
+            editor = list(person("Gary", "King"), person("Ori", "Rosen"), person("Martin", "Tanner")) 
+            )
+    .self$refs<-c(.self$refs,ref1)
   }
 )
 
@@ -49,3 +61,8 @@ zeidynamic$methods(
   }
 )
 
+zeidynamic$methods(
+  param = function(z.out) {
+    return(z.out)
+  }
+)

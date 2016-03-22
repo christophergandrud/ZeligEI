@@ -19,6 +19,20 @@ zeirxc$methods(
     .self$packageauthors <- "Michael Kellerman, Olivia Lau"
     .self$wrapper <- "eirxc"
     .self$vignette.url <- "http://docs.zeligproject.org/en/latest/zeligei-eirxc.html"
+    ref1<-bibentry(
+            bibtype="Article",
+            title = "Bayesian and Frequentist Inference for Ecological Inference: The R x C case.",
+            author = c(
+                person("Ori", "Rosen"),
+                person("Wenxin", "Jiang"),
+                person("Gary", "King"),
+                person("Martin A.", "Tanner")
+                ),
+            journal = "Statistica Neerlandia",
+            volume = 167,
+            year = 2001,
+            pages = "134--156")
+    .self$refs<-c(.self$refs,ref1)
   }
 )
 

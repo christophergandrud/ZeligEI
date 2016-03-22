@@ -19,6 +19,16 @@ zeiml$methods(
     .self$packageauthors <- "Gary King, Molly Roberts"
     .self$wrapper <- "eiml"
     .self$vignette.url <- "http://docs.zeligproject.org/en/latest/zeligei-eiml.html"
+    ref1<-bibentry(
+            bibtype="Book",
+            title = "A Solution to the Ecological Inference Problem: Reconstructing Individual Behavior from Aggregate Data",
+            author = person("Gary", "King"),
+            year = 1997,
+            publisher = "Princeton University Press",
+            organization = "Princeton University Press",
+            address = "Princeton"
+            )
+    .self$refs<-c(.self$refs, ref1)
   }
 )
 
@@ -43,3 +53,22 @@ zeiml$methods(
   }
 )
 
+zeiml$methods(
+  param = function(z.out, method=NULL) {  # method arguments allows bootstrap.  However, the same object should be returned regardless.
+    sim <- ei::ei.sim(z.out)
+    return(sim)
+  }
+)
+
+zeiml$methods(
+  qi = function(simparam, mm) {
+
+    if(.self$bootstrap){
+      ev <- ei::eiread(simparam, "maggs")
+    }else{
+      ev <- ei::eiread(simparam, "aggs")
+    }
+
+    return(list(ev = ev))
+  }
+)

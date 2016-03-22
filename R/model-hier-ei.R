@@ -10,6 +10,7 @@
 zeihier <- setRefClass("Zelig-eihier",
                           contains = "Zelig-ei")
 
+
 zeihier$methods(
   initialize = function() {
     callSuper()
@@ -19,6 +20,16 @@ zeihier$methods(
     .self$packageauthors <- "Andrew D. Martin, Kevin M. Quinn, Jong Hee Park"
     .self$wrapper <- "eihier"
     .self$vignette.url <- "http://docs.zeligproject.org/en/latest/zeligei-eihier.html"
+    ref1<-bibentry(
+            bibtype="Article",
+            title = "Ecological Inference for 2 x 2 Tables.",
+            author = person("Jonathan C.", "Wakefield"),
+            journal = "Journal of the Royal Statistical Society, Series A.",
+            volume = 167,
+            number = 3,
+            year = 2004,
+            pages = "385--445")
+    .self$refs<-c(.self$refs,ref1)
   }
 )
 
@@ -49,3 +60,8 @@ zeihier$methods(
   }
 )
 
+zeihier$methods(
+  param = function(z.out) {
+    return(z.out)
+  }
+)
