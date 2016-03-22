@@ -1,0 +1,51 @@
+#' Wakefield's Hierarchical Ecological Inference Model
+#'
+#' Vignette: \url{http://docs.zeligproject.org/en/latest/zeligei-eihier.html}
+#' @import methods
+#' @export Zelig-eihier
+#' @exportClass Zelig-eihier
+#'
+#' @include model-ei.R
+
+zeihier <- setRefClass("Zelig-eihier",
+                          contains = "Zelig-ei")
+
+zeihier$methods(
+  initialize = function() {
+    callSuper()
+    .self$name <- "eihier"
+    .self$description <- "Wakefield's Hierarchical Ecological Inference Model"
+    .self$fn <- quote(MCMCpack::MCMChierEI)
+    .self$packageauthors <- "Andrew D. Martin, Kevin M. Quinn, Jong Hee Park"
+    .self$wrapper <- "eihier"
+    .self$vignette.url <- "http://docs.zeligproject.org/en/latest/zeligei-eihier.html"
+  }
+)
+
+zeihier$methods(
+  zelig = function(formula, data, N=NULL, ..., weights = NULL, by = NULL, bootstrap = FALSE) {
+    if(!identical(bootstrap,FALSE)){
+      stop("Error: The bootstrap is not available for Markov chain Monte Carlo (MCMC) models.")
+    }
+    if(!is.null(weights)){
+      stop("Error: Weights are not implemented for the Wakefield Hierarchical EI model.  Try the eiml model if weights are required.")
+    }
+
+    cnvt <- convertEIformula(formula=formula, N=N, data=data)
+
+    .self$zelig.call <- match.call(expand.dots = TRUE)
+    .self$model.call <- match.call(expand.dots = TRUE)
+
+    .self$model.call$r0 <- cnvt$r0
+    .self$model.call$r1 <- cnvt$r1
+    .self$model.call$c0 <- cnvt$c0
+    .self$model.call$c1 <- cnvt$c1
+
+    .self$model.call$N <- NULL
+    .self$model.call$formula <- NULL
+    .self$model.call$data <- NULL
+
+    callSuper(formula = formula, data = data, ..., weights = NULL, by = by, bootstrap = FALSE)
+  }
+)
+
