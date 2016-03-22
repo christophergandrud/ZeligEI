@@ -3,12 +3,13 @@ Maintainer: James Honaker <zelig-zee@iq.harvard.edu>
 License: GPL (>=2)
 Title: Zelig Ecological Inference Models
 Author: James Honaker
-Description: Add-on package for Zelig 5. Enables the use of a variety of ecological inference models.
+Description: Add-on package for Zelig 5. Enables the use of a variety of
+    ecological inference models.
 Version: 0.1-0
 Date: 2016-03-15
 Imports:
     methods,
-    Zelig (>= 5.0-10),
+    Zelig (>= 5.0-11),
     MASS,
     jsonlite,
     dplyr,
@@ -19,9 +20,11 @@ Suggests:
     testthat,
     knitr
 Collate:
-    'model-ei.R'
-    'model-ei-rxc.R'
-    'model-ei-ml.R'
-    'model-ei-dynamic.R'
-    'model-ei-hier.R'
+    'model-eirxc.R'
     'create-json.R'
+    'model-ei.R'
+    'model-dynamic-ei.R'
+    'model-hier-ei.R'
+    'model-ml-ei.R'
+    'model-rxc-ei.R'
+RoxygenNote: 5.0.1
