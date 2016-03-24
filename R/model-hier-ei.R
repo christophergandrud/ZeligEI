@@ -65,3 +65,41 @@ zeihier$methods(
     return(z.out)
   }
 )
+
+zeihier$methods(
+  getcoef = function() {
+    "Get estimated model coefficients"
+    return(.self$zelig.out$z.out[[1]])
+  } 
+)
+
+zeihier$methods(
+  geweke.diag = function() {
+    diag <- coda::geweke.diag(.self$getcoef())
+    if(!citation("coda") %in% .self$refs){
+      .self$refs<-c(.self$refs,citation("coda"))
+    }
+    return(diag)
+  } 
+)
+
+zeihier$methods(
+  heidel.diag = function() {
+    diag <- coda::heidel.diag(.self$getcoef())
+    if(!citation("coda") %in% .self$refs){
+      .self$refs<-c(.self$refs,citation("coda"))
+    }
+    return(diag)
+  } 
+)
+
+zeihier$methods(
+  raftery.diag = function() {
+    diag <- coda::raftery.diag(.self$getcoef())
+    if(!citation("coda") %in% .self$refs){
+      .self$refs<-c(.self$refs,citation("coda"))
+    }
+    return(diag)
+  } 
+)
+
