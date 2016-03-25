@@ -72,3 +72,25 @@ zeiml$methods(
     return(list(ev = ev))
   }
 )
+
+
+
+# Overwrite diagnostic test that are inherited from model-ei
+zeiml$methods(
+  geweke.diag = function() {
+    stop("The eiml model is not estimated by Markov chain Monte Carlo, so this test for MCMC convergence is not needed.")
+  } 
+)
+
+zeiml$methods(
+  heidel.diag = function() {
+    stop("The eiml model is not estimated by Markov chain Monte Carlo, so this test for MCMC convergence is not needed.")
+  } 
+)
+
+zeiml$methods(
+  raftery.diag = function() {
+    stop("The eiml model is not estimated by Markov chain Monte Carlo, so this test for MCMC convergence is not needed.")
+  } 
+)
+

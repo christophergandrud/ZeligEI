@@ -73,33 +73,3 @@ zeihier$methods(
   } 
 )
 
-zeihier$methods(
-  geweke.diag = function() {
-    diag <- coda::geweke.diag(.self$getcoef())
-    if(!citation("coda") %in% .self$refs){
-      .self$refs<-c(.self$refs,citation("coda"))
-    }
-    return(diag)
-  } 
-)
-
-zeihier$methods(
-  heidel.diag = function() {
-    diag <- coda::heidel.diag(.self$getcoef())
-    if(!citation("coda") %in% .self$refs){
-      .self$refs<-c(.self$refs,citation("coda"))
-    }
-    return(diag)
-  } 
-)
-
-zeihier$methods(
-  raftery.diag = function() {
-    diag <- coda::raftery.diag(.self$getcoef())
-    if(!citation("coda") %in% .self$refs){
-      .self$refs<-c(.self$refs,citation("coda"))
-    }
-    return(diag)
-  } 
-)
-

@@ -56,3 +56,14 @@ zeirxc$methods(
     callSuper(formula = formula, data = data, N=NULL, ..., weights = weights, by = by, bootstrap = bootstrap)
   }
 )
+
+zeirxc$methods(
+  getcoef = function() {
+    "Get estimated model coefficients"
+    coeflist <- list()
+    for(i in 1:length(.self$zelig.out$z.out)){
+      coeflist[[i]]<-.self$zelig.out$z.out[[i]]$draw
+    }
+    return(coeflist) 
+  } 
+)
