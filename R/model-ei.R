@@ -117,6 +117,10 @@ zei$methods(
     }else{                     # eidynamic and eihier pack all parameters into one list
       diag <- lapply(mycoef, coda::geweke.diag)
     }
+    # Collapse if only one list element for prettier printing
+    if(length(diag)==1){
+        diag<-diag[[1]]
+    }
 
     if(!citation("coda") %in% .self$refs){
       .self$refs<-c(.self$refs,citation("coda"))
@@ -144,6 +148,10 @@ zei$methods(
     }else{                     # eidynamic and eihier pack all parameters into one list
       diag <- lapply(mycoef, coda::heidel.diag)
     }
+    # Collapse if only one list element for prettier printing
+    if(length(diag)==1){
+        diag<-diag[[1]]
+    }
 
     if(!citation("coda") %in% .self$refs){
       .self$refs<-c(.self$refs,citation("coda"))
@@ -169,6 +177,11 @@ zei$methods(
     }else{                     # eidynamic and eihier pack all parameters into one list
       diag <- lapply(mycoef, coda::raftery.diag)
     }
+    # Collapse if only one list element for prettier printing
+    if(length(diag)==1){
+        diag<-diag[[1]]
+    }
+
 
 
     if(!citation("coda") %in% .self$refs){
