@@ -1,6 +1,6 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
+.git
 .gitignore
 images
 README.md
-.DS_Store
