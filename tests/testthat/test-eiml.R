@@ -1,0 +1,6 @@
+z5 <- zeiml$new()
+#library("ei")
+#data(sample)
+#z5$zelig(t~x, N="n", data=sample)
+#expect_that(length(z5$getcoef()), equals(1))
+expect_that(length(z5), equals(1))
