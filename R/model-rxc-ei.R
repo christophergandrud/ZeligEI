@@ -37,7 +37,9 @@ zeirxc$methods(
 )
 
 zeirxc$methods(
-  zelig = function(formula, data, N = NULL, ..., weights = NULL, by = NULL, bootstrap = FALSE, na.action=na.omit) {
+  zelig = function(formula, data, N = NULL, ..., weights = NULL, by = NULL, bootstrap = FALSE, na.action="na.omit") {
+    na.action <- checkZeligEIna.action(na.action)
+
     if(!identical(bootstrap,FALSE)){
       stop("Error: The bootstrap is not available for Markov chain Monte Carlo (MCMC) models.")
     }
@@ -58,6 +60,8 @@ zeirxc$methods(
     }else{
         .self$model.call$total <- N
     }
+    .self$model.call$na.action <- NULL
+
     callSuper(formula = formula, data = data, N=NULL, ..., weights = weights, by = by, bootstrap = bootstrap)
   }
 )

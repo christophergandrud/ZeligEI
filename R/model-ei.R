@@ -43,15 +43,26 @@ zei$methods(
   }
 )
 
-#' Conversion utility to allow different possible formula notations, and deal with zeroes and missing values, for EI models in eiml, eirxc
+#' Checking function for argument to na.action
 #' @keywords internal
 
 checkZeligEIna.action = function(na.action){
+  # Allow the user to accidentally pass the na.omit or na.fail functions, instead of a text string
+  if(identical(na.action,na.omit)){
+    na.action<-"na.omit"
+  }
+  if(identical(na.action,na.fail)){
+    na.action<-"na.fail"
+  }
+
   if(na.action !%in% c("na.omit","na.fail")){
     stop("Error: Zelig's na.action argument should be a text string of 'na.omit' or 'na.fail' ")
   }
-  return(TRUE)
+  return(na.action)
 }
+
+#' Conversion utility to allow different possible formula notations, and deal with zeroes and missing values, for EI models in eiml, eirxc
+#' @keywords internal
 
 convertEIformula2 = function(formula, data, N, na.action){
 
