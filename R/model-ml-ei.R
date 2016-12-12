@@ -36,8 +36,6 @@ zeiml$methods(
   zelig = function(formula, data, N = NULL, ..., weights = NULL, by = NULL, bootstrap = FALSE) {
     if(is.null(N)){
       stop("The argument N needs to be set to the name of the variable giving the total for each unit, or a vector of counts.")
-
-      # Put in automated fix if data is integer.
     }
 
     .self$zelig.call <- match.call(expand.dots = TRUE)
@@ -45,6 +43,10 @@ zeiml$methods(
     .self$model.call <- match.call(expand.dots = TRUE)
     .self$model.call$N <- NULL
     if(is.numeric(N)){
+        if (length(N)<nrow(data)){
+          stop("The argument N needs to match in length the number of observations in the dataset.")
+        }
+      data$ZeligN <- N
       .self$model.call$total <- "ZeligN"
     }else{
       .self$model.call$total <- N
