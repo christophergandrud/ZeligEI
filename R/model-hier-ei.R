@@ -34,7 +34,7 @@ zeihier$methods(
 )
 
 zeihier$methods(
-  zelig = function(formula, data, N=NULL, ..., weights = NULL, by = NULL, bootstrap = FALSE) {
+  zelig = function(formula, data, N=NULL, ..., weights = NULL, by = NULL, bootstrap = FALSE, na.action=na.omit) {
     if(!identical(bootstrap,FALSE)){
       stop("Error: The bootstrap is not available for Markov chain Monte Carlo (MCMC) models.")
     }

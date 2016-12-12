@@ -21,6 +21,12 @@ zei$methods(
   zelig = function(formula, data, N, ..., weights = NULL, by = NULL, bootstrap = FALSE) {
    # .self$zelig.call <- match.call(expand.dots = TRUE)
    # .self$model.call <- match.call(expand.dots = TRUE)
+
+   # Check for zeros
+
+
+   # Check for NA's
+
     callSuper(formula = formula, data = data, N=N, ..., weights = weights, by = by, bootstrap = bootstrap)
   }
 )
@@ -37,10 +43,45 @@ zei$methods(
   }
 )
 
-#' Conversion utility to allow different possible formula notations for EI models
+#' Conversion utility to allow different possible formula notations, and deal with zeroes and missing values, for EI models in eiml, eirxc
 #' @keywords internal
 
-convertEIformula = function(formula, N, data){
+checkZeligEIna.action = function(na.action){
+  if(na.action !%in% c("na.omit","na.fail")){
+    stop("Error: Zelig's na.action argument should be a text string of 'na.omit' or 'na.fail' ")
+  }
+  return(TRUE)
+}
+
+convertEIformula2 = function(formula, data, N, na.action){
+
+  if(!is.null(N)){
+    if(is.character(N)){
+      Nvalid <- N %in% names(data)
+      if(Nvalid){
+        Nvalues <- data[[ as.character(N) ]]
+      }
+    }else if(is.numeric(N)){
+      Nvalid <- length(N) == nrow(data)
+      if(Nvalid){
+        Nvalues <- N
+      }
+    }
+  }else{
+    Nvalid <- FALSE
+  }
+
+  flag.zero <- Nvalues<1
+
+  check <- formula[[1]]=="~"
+
+  return(list(formula=newformula, data=newdata, N=newN))
+}
+
+#' Conversion utility to allow different possible formula notations, and deal with zeroes and missing values, for EI models in eiheir, eidynamic
+#' @keywords internal
+
+convertEIformula = function(formula, N, data, na.action){
   formula <- as.formula(formula)
   
   if(!is.null(N)){
@@ -58,7 +99,6 @@ convertEIformula = function(formula, N, data){
   }else{
     Nvalid <- FALSE
   }
-
 
   check <- formula[[1]]=="~"
   if(length(formula[[2]]) == 1){
@@ -97,10 +137,34 @@ convertEIformula = function(formula, N, data){
     stop("Formula and/or N argument provided for EI model does not appear to match any of the accepted templates.")
   }
 
+  flag.zero <- Nvalues<1
+  if(any(flag.zero)){
+    warnings("There are observations in the EI model with zero as the total count for the observation.  Check data.  These observations have been removed.")
+    r0<-r0[!flag.zero]
+    r1<-r1[!flag.zero]
+    c0<-c0[!flag.zero]
+    c1<-c1[!flag.zero]
+    Nvalues<-Nvalues[!flag.zero]
+  }
+
+  flag.missing <- is.na(r0) | is.na(r1) | is.na(c0) | is.na(c1) | is.na(Nvalues)
+  if(any(flag.missing)){
+    if (na.action=="na.omit"){ 
+      warnings("There are observations in the EI model with missing values.  These observations have been removed.")
+      r0<-r0[!flag.missing]
+      r1<-r1[!flag.missing]
+      c0<-c0[!flag.missing]
+      c1<-c1[!flag.missing]
+      Nvalues<-Nvalues[!flag.missing]
+    } else {
+      stop("Error: There are observations in the EI model with zero as the total count for the observation. \nRemove these observations from data, or change Zelig's 'na.action' argument.")   
+    }
+  }
+
   return(list(r0=r0,r1=r1,c0=c0,c1=c1,N=Nvalues))
 }
 
-# This works for eiheir, eidynamic and needs overwriting for eirxc and eiml
+# This works for eiheir, eidynamic, eiml and needs overwriting for eirxc
 zei$methods(
   getcoef = function() {
     "Get estimated model coefficients"
