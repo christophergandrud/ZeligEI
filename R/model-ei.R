@@ -48,7 +48,7 @@ zei$methods(
 
 checkZeligEIna.action = function(na.action){
   # Allow the user to accidentally pass the na.omit or na.fail functions, instead of a text string
-  if(identical(na.action,na.omit)){
+  if(identical(na.action,stats::na.omit)){
     na.action<-"na.omit"
   }
   if(identical(na.action,na.fail)){
