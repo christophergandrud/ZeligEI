@@ -45,9 +45,6 @@ zeiml$methods(
     .self$model.call <- match.call(expand.dots = TRUE)
     .self$model.call$N <- NULL
     if(is.numeric(N)){
-      if (length(N)<nrow(data)){
-        stop("The argument N needs to match in length the number of observations in the dataset.")
-      }
       data$ZeligN <- N
       .self$model.call$total <- "ZeligN"
     }else{

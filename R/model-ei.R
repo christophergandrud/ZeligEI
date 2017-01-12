@@ -71,18 +71,46 @@ convertEIformula2 = function(formula, data, N, na.action){
       Nvalid <- N %in% names(data)
       if(Nvalid){
         Nvalues <- data[[ as.character(N) ]]
+        .self$model.call$total <- N
       }
     }else if(is.numeric(N)){
       Nvalid <- length(N) == nrow(data)
       if(Nvalid){
-        Nvalues <- N
+        data$ZeligN <- N
+        .self$model.call$total <- "ZeligN"
+      } else {
+        stop("The argument N needs to match in length the number of observations in the dataset.")
       }
     }
   }else{
-    Nvalid <- FALSE
+    rterms <- length(formula[[2]])
+    cterms <- length(formula[[3]])
+    if((rterms==1) | (cterms==1)){
+      stop("The argument 'N' has not been specified, however the formula does not define all terms.  Either set the 'N' argument, or redefine formula using 'cbind' notation, or both.")
+    }
+
+    rdata <- data[ as.character(formula[[2]][2:rterms] ) ]
+    rtotal <- apply(rdata,1,sum)
+    cdata <- data[ as.character(formula[[3]][2:cterms] ) ]
+    ctotal <- apply(cdata,1,sum)
+
+    Nvalid <- all(rtotal == ctotal)
+    if(Nvalid){
+      data$ZeligN <- rtotal
+      .self$model.call$total <- "ZeligN"
+    } else {
+      stop("Some of the row observations do not sum to the same total as the column observations.  Please correct the data or the formula, or set the N argument.")
+    }
   }
 
   flag.zero <- Nvalues<1
+
+  if(any(flag.zero)){
+    warnings("There are observations in the EI model with zero as the total count for the observation.  Check data.  These observations have been removed.")
+    data <- data[!flag.zero]
+  }
+
+
 
   check <- formula[[1]]=="~"
 
@@ -105,10 +133,29 @@ convertEIformula = function(formula, N, data, na.action){
       Nvalid <- length(N) == nrow(data)
       if(Nvalid){
         Nvalues <- N
+      } else {
+        stop("The argument 'N' needs to match in length the number of observations in the dataset.")
       }
     }
   }else{
-    Nvalid <- FALSE
+    rterms <- length(formula[[2]])
+    cterms <- length(formula[[3]])
+    if((rterms==1) | (cterms==1)){
+      stop("The argument 'N' has not been specified, however the formula does not define all terms.  Either set the 'N' argument, or redefine formula using 'cbind' notation, or both.")
+    }
+
+    rdata <- data[ as.character(formula[[2]][2:rterms] ) ]
+    rtotal <- apply(rdata,1,sum)
+    cdata <- data[ as.character(formula[[3]][2:cterms] ) ]
+    ctotal <- apply(cdata,1,sum)
+
+    Nvalid <- all(rtotal == ctotal)
+    if(Nvalid){
+      data$ZeligN <- rtotal
+      .self$model.call$total <- "ZeligN"
+    } else {
+      stop("Some of the row observations do not sum to the same total as the column observations.  Please correct the data or the formula, or set the 'N' argument.")
+    }
   }
 
   check <- formula[[1]]=="~"
@@ -130,7 +177,7 @@ convertEIformula = function(formula, N, data, na.action){
       c0 <- data[[ as.character(formula[[3]][2]) ]]
       c1 <- data[[ as.character(formula[[3]][3]) ]]
     }
-    if( !identical(floor(r0),r0) ){
+    if( !identical(floor(r0),r0) ){   # Make a better check here.  Deal with case of fraction and 0-100.
       check <- check & Nvalid                               # If variables expressed as proportions, must have useable N argument
 
       if(check){

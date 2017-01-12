@@ -43,24 +43,15 @@ zeirxc$methods(
     if(!identical(bootstrap,FALSE)){
       stop("Error: The bootstrap is not available for Markov chain Monte Carlo (MCMC) models.")
     }
-    if(is.null(N)){
-        stop("The argument N needs to be set to the name of the variable giving the total for each unit, or a vector of counts.")
-    }
     
     .self$zelig.call <- match.call(expand.dots = TRUE)
     
     .self$model.call <- match.call(expand.dots = TRUE)
     .self$model.call$N <- NULL
-    if(is.numeric(N)){
-        if (length(N)<nrow(data)){
-            stop("The argument N needs to match in length the number of observations in the dataset.")
-        }
-        data$ZeligN <- N
-        .self$model.call$total <- "ZeligN"
-    }else{
-        .self$model.call$total <- N
-    }
     .self$model.call$na.action <- NULL
+
+
+
 
     callSuper(formula = formula, data = data, N=NULL, ..., weights = weights, by = by, bootstrap = bootstrap)
   }
