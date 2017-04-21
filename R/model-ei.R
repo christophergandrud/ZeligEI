@@ -55,7 +55,7 @@ checkZeligEIna.action = function(na.action){
     na.action<-"na.fail"
   }
 
-  if(na.action !%in% c("na.omit","na.fail")){
+  if(!(na.action %in% c("na.omit","na.fail"))){
     stop("Error: Zelig's na.action argument should be a text string of 'na.omit' or 'na.fail' ")
   }
   return(na.action)
